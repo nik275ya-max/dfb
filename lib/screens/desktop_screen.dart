@@ -51,7 +51,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
 
         final delta = event.position - _swipeStart!;
 
-        if (delta.distance > 50 && delta.dy.abs() > delta.dx.abs()) {
+        if (delta.distance > 50 && delta.dx.abs() > delta.dy.abs()) {
           _swiping = false;
           final position = _getPositionFromGlobal(_swipeStart!);
           if (position != null && position >= 1 && position <= 9) {
