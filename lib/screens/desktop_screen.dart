@@ -29,13 +29,30 @@ class _DesktopScreenState extends State<DesktopScreen> {
     if (gridBox == null) return 0;
     final localPos = gridBox.globalToLocal(globalPosition);
     final size = gridBox.size;
-    final contentW = size.width - 48;
-    final contentH = size.height - 32;
-    final px = localPos.dx - 24;
-    final py = localPos.dy - 16;
-    if (px < 0 || py < 0 || px >= contentW || py >= contentH) return 0;
-    final col = (px / contentW * 3).floor().clamp(0, 2);
-    final row = (py / contentH * 3).floor().clamp(0, 2);
+
+    const padX = 24.0;
+    const padY = 16.0;
+    const crossSpacing = 16.0;
+    const mainSpacing = 24.0;
+    const aspectRatio = 0.85;
+
+    final contentW = size.width - padX * 2;
+    final cellW = (contentW - crossSpacing * 2) / 3;
+    final cellH = cellW / aspectRatio;
+
+    final px = localPos.dx - padX;
+    final py = localPos.dy - padY;
+    if (px < 0 || py < 0) return 0;
+
+    final slotW = cellW + crossSpacing;
+    final slotH = cellH + mainSpacing;
+    final col = (px / slotW).floor().clamp(0, 2);
+    final row = (py / slotH).floor().clamp(0, 2);
+
+    final cellX = px - col * slotW;
+    final cellY = py - row * slotH;
+    if (cellX > cellW || cellY > cellH) return 0;
+
     return row * 3 + col + 1;
   }
 
