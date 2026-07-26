@@ -23,17 +23,17 @@ class _DesktopScreenState extends State<DesktopScreen> {
   Offset? _swipeStart;
   bool _swiping = false;
 
-  int? _getPositionFromGlobal(Offset globalPosition) {
+  int _getPositionFromGlobal(Offset globalPosition) {
     final RenderBox? gridBox =
         _gridKey.currentContext?.findRenderObject() as RenderBox?;
-    if (gridBox == null) return null;
+    if (gridBox == null) return 0;
     final localPos = gridBox.globalToLocal(globalPosition);
     final size = gridBox.size;
     final contentW = size.width - 48;
     final contentH = size.height - 32;
     final px = localPos.dx - 24;
     final py = localPos.dy - 16;
-    if (px < 0 || py < 0 || px >= contentW || py >= contentH) return null;
+    if (px < 0 || py < 0 || px >= contentW || py >= contentH) return 0;
     final col = (px / contentW * 3).floor().clamp(0, 2);
     final row = (py / contentH * 3).floor().clamp(0, 2);
     return row * 3 + col + 1;
@@ -54,9 +54,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
         if (delta.distance > 50 && delta.dx.abs() > delta.dy.abs()) {
           _swiping = false;
           final position = _getPositionFromGlobal(_swipeStart!);
-          if (position != null && position >= 1 && position <= 9) {
-            widget.onSwipeDetected(position);
-          }
+          widget.onSwipeDetected(position);
           _swipeStart = null;
         }
       },
