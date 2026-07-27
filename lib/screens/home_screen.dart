@@ -4,7 +4,6 @@ import '../services/storage_service.dart';
 import '../utils/app_icons.dart';
 import 'desktop_screen.dart';
 import 'apps_notes_screen.dart';
-import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final List<ForceList> lists;
@@ -145,20 +144,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _openSettings() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SettingsScreen(
-          lists: widget.lists,
-          activeListId: widget.activeListId,
-          onListsChanged: widget.onListsChanged,
-          onActiveListChanged: widget.onActiveListChanged,
-        ),
-      ),
-    );
-  }
-
   Widget _buildPageIndicator() {
     return Positioned(
       bottom: 24,
@@ -211,30 +196,12 @@ class _HomeScreenState extends State<HomeScreen> {
               AppsNotesScreen(
                 lists: widget.lists,
                 activeListId: widget.activeListId,
+                onListsChanged: widget.onListsChanged,
+                onActiveListChanged: widget.onActiveListChanged,
               ),
             ],
           ),
           _buildPageIndicator(),
-          // Settings button
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 48,
-            right: 16,
-            child: GestureDetector(
-              onTap: _openSettings,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

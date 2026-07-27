@@ -18,7 +18,6 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   String? _selectedListId;
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -27,14 +26,10 @@ class _NotesScreenState extends State<NotesScreen> {
     if (_selectedListId == null && widget.lists.isNotEmpty) {
       _selectedListId = widget.lists.first.id;
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToForcedWord();
-    });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -47,19 +42,6 @@ class _NotesScreenState extends State<NotesScreen> {
     } catch (_) {
       return widget.lists.isNotEmpty ? widget.lists.first : null;
     }
-  }
-
-  void _scrollToForcedWord() {
-    final number = _lastSwipeNumber;
-    if (number == null || !_scrollController.hasClients) return;
-    final index = number - 1;
-    if (index < 0) return;
-    final targetOffset = index * 52.0;
-    _scrollController.animateTo(
-      targetOffset,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
@@ -144,9 +126,6 @@ class _NotesScreenState extends State<NotesScreen> {
                       setState(() {
                         _selectedListId = list.id;
                       });
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        _scrollToForcedWord();
-                      });
                     },
                   ),
                 );
@@ -159,41 +138,25 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   Widget _buildWordsList(ForceList list) {
-    final number = _lastSwipeNumber;
-
     return ListView.builder(
-      controller: _scrollController,
       padding: const EdgeInsets.all(16),
       itemCount: list.words.length,
       itemBuilder: (context, index) {
         final word = list.words[index];
         final position = index + 1;
-        final isForcedPosition = number != null &&
-            position == number &&
-            list.forcedWord.isNotEmpty;
-        final displayWord = isForcedPosition ? list.forcedWord : word;
+        final displayWord = list.forcedWord.isNotEmpty && position == _lastSwipeNumber
+            ? list.forcedWord
+            : word;
 
         return Container(
           margin: const EdgeInsets.only(bottom: 4),
-          decoration: isForcedPosition
-              ? BoxDecoration(
-                  color: const Color(0xFF0088CC).withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: const Color(0xFF0088CC),
-                    width: 1.5,
-                  ),
-                )
-              : null,
           child: ListTile(
             dense: true,
             title: Text(
               '$position. $displayWord',
-              style: TextStyle(
-                color: isForcedPosition ? Colors.green : Colors.white,
+              style: const TextStyle(
+                color: Colors.white,
                 fontSize: 16,
-                fontWeight:
-                    isForcedPosition ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ),
