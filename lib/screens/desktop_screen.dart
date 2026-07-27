@@ -32,17 +32,26 @@ class _DesktopScreenState extends State<DesktopScreen> {
 
     const padX = 12.0;
     const padY = 8.0;
+    const crossSpacing = 16.0;
+    const mainSpacing = 24.0;
+    const aspectRatio = 0.85;
 
     final contentW = size.width - padX * 2;
-    final contentH = size.height - padY * 2;
-    if (contentW <= 0 || contentH <= 0) return 0;
+    if (contentW <= 0) return 0;
+
+    final cellW = (contentW - crossSpacing * 2) / 3;
+    final cellH = cellW / aspectRatio;
 
     final px = localPos.dx - padX;
     final py = localPos.dy - padY;
-    if (px < 0 || py < 0 || px >= contentW || py >= contentH) return 0;
+    if (px < 0 || py < 0) return 0;
 
-    final col = (px / contentW * 3).floor().clamp(0, 2);
-    final row = (py / contentH * 3).floor().clamp(0, 2);
+    final slotW = cellW + crossSpacing;
+    final slotH = cellH + mainSpacing;
+
+    final col = (px / slotW).floor().clamp(0, 2);
+    final row = (py / slotH).floor().clamp(0, 2);
+
     return row * 3 + col + 1;
   }
 
