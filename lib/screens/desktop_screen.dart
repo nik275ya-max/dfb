@@ -32,27 +32,17 @@ class _DesktopScreenState extends State<DesktopScreen> {
 
     const padX = 12.0;
     const padY = 8.0;
-    const crossSpacing = 16.0;
-    const mainSpacing = 24.0;
-    const aspectRatio = 0.85;
 
     final contentW = size.width - padX * 2;
-    final cellW = (contentW - crossSpacing * 2) / 3;
-    final cellH = cellW / aspectRatio;
+    final contentH = size.height - padY * 2;
+    if (contentW <= 0 || contentH <= 0) return 0;
 
     final px = localPos.dx - padX;
     final py = localPos.dy - padY;
-    if (px < 0 || py < 0) return 0;
+    if (px < 0 || py < 0 || px >= contentW || py >= contentH) return 0;
 
-    final slotW = cellW + crossSpacing;
-    final slotH = cellH + mainSpacing;
-    final col = (px / slotW).floor().clamp(0, 2);
-    final row = (py / slotH).floor().clamp(0, 2);
-
-    final cellX = px - col * slotW;
-    final cellY = py - row * slotH;
-    if (cellX > cellW || cellY > cellH) return 0;
-
+    final col = (px / contentW * 3).floor().clamp(0, 2);
+    final row = (py / contentH * 3).floor().clamp(0, 2);
     return row * 3 + col + 1;
   }
 
@@ -68,7 +58,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
 
         final delta = event.position - _swipeStart!;
 
-        if (delta.distance > 50 && delta.dx.abs() > delta.dy.abs()) {
+        if (delta.distance > 25 && delta.dx.abs() > delta.dy.abs()) {
           _swiping = false;
           final position = _getPositionFromGlobal(_swipeStart!);
           widget.onSwipeDetected(position);
