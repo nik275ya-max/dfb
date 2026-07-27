@@ -30,8 +30,8 @@ class _DesktopScreenState extends State<DesktopScreen> {
     final localPos = gridBox.globalToLocal(globalPosition);
     final size = gridBox.size;
 
-    const padX = 24.0;
-    const padY = 16.0;
+    const padX = 12.0;
+    const padY = 8.0;
     const crossSpacing = 16.0;
     const mainSpacing = 24.0;
     const aspectRatio = 0.85;
@@ -98,44 +98,18 @@ class _DesktopScreenState extends State<DesktopScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              _buildStatusBar(context),
+              const Spacer(flex: 2),
               Expanded(
+                flex: 8,
                 child: DesktopGrid(
                   key: _gridKey,
                   icons: widget.icons,
                 ),
               ),
+              const Spacer(flex: 1),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildStatusBar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '${TimeOfDay.now().hour.toString().padLeft(2, '0')}:${TimeOfDay.now().minute.toString().padLeft(2, '0')}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const Row(
-            children: [
-              Icon(Icons.signal_cellular_4_bar, color: Colors.white, size: 16),
-              SizedBox(width: 4),
-              Icon(Icons.wifi, color: Colors.white, size: 16),
-              SizedBox(width: 4),
-              Icon(Icons.battery_full, color: Colors.white, size: 16),
-            ],
-          ),
-        ],
       ),
     );
   }

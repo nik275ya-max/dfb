@@ -24,31 +24,31 @@ const List<AppIconData> screen1Icons = [
   AppIconData(name: 'TikTok', icon: Icons.music_note, color: Color(0xFF000000), position: 6),
   AppIconData(name: 'Spotify', icon: Icons.headphones, color: Color(0xFF1DB954), position: 7),
   AppIconData(name: 'Netflix', icon: Icons.movie, color: Color(0xFFE50914), position: 8),
-  AppIconData(name: 'Phone', icon: Icons.phone, color: Color(0xFF4CAF50), position: 9),
+  AppIconData(name: 'Телефон', icon: Icons.phone, color: Color(0xFF4CAF50), position: 9),
 ];
 
 // Screen 2: Units (3x3 grid)
 const List<AppIconData> screen2Icons = [
   AppIconData(name: 'Gmail', icon: Icons.email, color: Color(0xFFEA4335), position: 1),
   AppIconData(name: 'Chrome', icon: Icons.language, color: Color(0xFF4285F4), position: 2),
-  AppIconData(name: 'Maps', icon: Icons.map, color: Color(0xFF34A853), position: 3),
-  AppIconData(name: 'Camera', icon: Icons.photo_camera, color: Color(0xFF607D8B), position: 4),
-  AppIconData(name: 'Calendar', icon: Icons.calendar_today, color: Color(0xFF4285F4), position: 5),
-  AppIconData(name: 'Clock', icon: Icons.access_time, color: Color(0xFF039BE5), position: 6),
-  AppIconData(name: 'Notes', icon: Icons.note, color: Color(0xFFFBBC04), position: 7),
-  AppIconData(name: 'Weather', icon: Icons.wb_sunny, color: Color(0xFFFF9800), position: 8),
-  AppIconData(name: 'Calculator', icon: Icons.calculate, color: Color(0xFF78909C), position: 9),
+  AppIconData(name: 'Карты', icon: Icons.map, color: Color(0xFF34A853), position: 3),
+  AppIconData(name: 'Камера', icon: Icons.photo_camera, color: Color(0xFF607D8B), position: 4),
+  AppIconData(name: 'Календарь', icon: Icons.calendar_today, color: Color(0xFF4285F4), position: 5),
+  AppIconData(name: 'Часы', icon: Icons.access_time, color: Color(0xFF039BE5), position: 6),
+  AppIconData(name: 'Заметки', icon: Icons.note, color: Color(0xFFFBBC04), position: 7),
+  AppIconData(name: 'Погода', icon: Icons.wb_sunny, color: Color(0xFFFF9800), position: 8),
+  AppIconData(name: 'Калькулятор', icon: Icons.calculate, color: Color(0xFF78909C), position: 9),
 ];
 
 // Screen 3: Extra apps for distraction
 const List<AppIconData> screen3Icons = [
-  AppIconData(name: 'Files', icon: Icons.folder, color: Color(0xFF4285F4), position: 1),
-  AppIconData(name: 'Photos', icon: Icons.photo_library, color: Color(0xFFEA4335), position: 2),
-  AppIconData(name: 'Music', icon: Icons.music_note, color: Color(0xFFFF5722), position: 3),
-  AppIconData(name: 'Settings', icon: Icons.settings, color: Color(0xFF607D8B), position: 4),
-  AppIconData(name: 'Contacts', icon: Icons.contacts, color: Color(0xFF2196F3), position: 5),
-  AppIconData(name: 'Translate', icon: Icons.translate, color: Color(0xFF4285F4), position: 6),
-  AppIconData(name: 'Notes', icon: Icons.note, color: Color(0xFFFBBC04), position: 7),
-  AppIconData(name: 'Podcast', icon: Icons.podcasts, color: Color(0xFF8E24AA), position: 8),
-  AppIconData(name: 'Wallet', icon: Icons.account_balance_wallet, color: Color(0xFF43A047), position: 9),
+  AppIconData(name: 'Файлы', icon: Icons.folder, color: Color(0xFF4285F4), position: 1),
+  AppIconData(name: 'Фото', icon: Icons.photo_library, color: Color(0xFFEA4335), position: 2),
+  AppIconData(name: 'Музыка', icon: Icons.music_note, color: Color(0xFFFF5722), position: 3),
+  AppIconData(name: 'Настройки', icon: Icons.settings, color: Color(0xFF607D8B), position: 4),
+  AppIconData(name: 'Контакты', icon: Icons.contacts, color: Color(0xFF2196F3), position: 5),
+  AppIconData(name: 'Переводчик', icon: Icons.translate, color: Color(0xFF4285F4), position: 6),
+  AppIconData(name: 'Заметки', icon: Icons.note, color: Color(0xFFFBBC04), position: 7),
+  AppIconData(name: 'Подкасты', icon: Icons.podcasts, color: Color(0xFF8E24AA), position: 8),
+  AppIconData(name: 'Кошелёк', icon: Icons.account_balance_wallet, color: Color(0xFF43A047), position: 9),
 ];

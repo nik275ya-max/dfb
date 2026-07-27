@@ -31,12 +31,13 @@ class AppsNotesScreen extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            _buildStatusBar(),
+            const Spacer(flex: 2),
             Expanded(
+              flex: 8,
               child: DesktopGrid(
                 icons: screen3Icons,
                 onIconTap: (name) {
-                  if (name == 'Notes') {
+                  if (name == 'Заметки') {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -50,36 +51,9 @@ class AppsNotesScreen extends StatelessWidget {
                 },
               ),
             ),
+            const Spacer(flex: 1),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildStatusBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '${TimeOfDay.now().hour.toString().padLeft(2, '0')}:${TimeOfDay.now().minute.toString().padLeft(2, '0')}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const Row(
-            children: [
-              Icon(Icons.signal_cellular_4_bar, color: Colors.white, size: 16),
-              SizedBox(width: 4),
-              Icon(Icons.wifi, color: Colors.white, size: 16),
-              SizedBox(width: 4),
-              Icon(Icons.battery_full, color: Colors.white, size: 16),
-            ],
-          ),
-        ],
       ),
     );
   }
