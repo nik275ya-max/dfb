@@ -139,6 +139,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
   Widget _buildWordsList(ForceList list) {
     return ListView.builder(
+      key: PageStorageKey(list.id),
       padding: const EdgeInsets.all(16),
       itemCount: list.words.length,
       itemBuilder: (context, index) {
