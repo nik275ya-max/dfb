@@ -178,6 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
+                if (index == 0) {
+                  _unitsSelected = false;
+                }
               });
             },
             children: [
