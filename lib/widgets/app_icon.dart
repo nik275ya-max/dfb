@@ -19,26 +19,28 @@ class AppIconWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: appIcon.color.withValues(alpha: 0.9),
-              borderRadius: BorderRadius.circular(14),
+              shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: appIcon.color.withValues(alpha: 0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  color: appIcon.color.withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
-            child: Icon(
-              appIcon.icon,
-              color: Colors.white,
-              size: 28,
+            child: Center(
+              child: Icon(
+                appIcon.icon,
+                color: Colors.white,
+                size: 28,
+              ),
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
             appIcon.name,
             style: const TextStyle(
