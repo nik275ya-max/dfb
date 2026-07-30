@@ -35,21 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+    StorageService.loadBackgroundPath();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  ForceList? get _activeList {
-    if (widget.activeListId == null) return null;
-    try {
-      return widget.lists.firstWhere((l) => l.id == widget.activeListId);
-    } catch (_) {
-      return widget.lists.isNotEmpty ? widget.lists.first : null;
-    }
   }
 
   void _onSwipeDetected(int position, bool isTensScreen) {
@@ -61,17 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _unitsSelected = true;
     }
 
-    final screen = isTensScreen ? '10' : '1';
-    final digit = isTensScreen ? _tensDigit : _unitsDigit;
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Экран $screen: позиция $position → цифра $digit'),
-        duration: const Duration(seconds: 1),
-        backgroundColor: const Color(0xFF0088CC),
-      ),
-    );
-
     _checkAndShowResult();
   }
 
@@ -80,68 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
       final number = _tensDigit * 10 + _unitsDigit;
       StorageService.saveLastSwipeNumber(number);
 
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Число $number сохранено! Откройте Заметки.'),
-          duration: const Duration(seconds: 2),
-          backgroundColor: Colors.green.shade700,
-        ),
-      );
-
-      _showResult(number);
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted) {
-          setState(() {
-            _tensSelected = false;
-            _unitsSelected = false;
-          });
-        }
+      setState(() {
+        _tensSelected = false;
+        _unitsSelected = false;
       });
     }
-  }
-
-  void _showResult(int number) {
-    final list = _activeList;
-    if (list == null) return;
-
-    final word = list.forcedWord.isNotEmpty ? list.forcedWord : list.getWord(number);
-
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1a1a2e),
-        title: Text(
-          'Номер: $number',
-          style: const TextStyle(color: Colors.white),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Слово:',
-              style: TextStyle(color: Colors.white54),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              word,
-              style: const TextStyle(
-                color: Colors.green,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK', style: TextStyle(color: Colors.green)),
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _buildPageIndicator() {

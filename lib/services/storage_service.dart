@@ -1,12 +1,34 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/force_list.dart';
 
 class StorageService {
   static const String _listsKey = 'force_lists';
   static const String _activeListIdKey = 'active_list_id';
+  static const String _backgroundPathKey = 'background_image_path';
 
   static int? _cachedLastSwipeNumber;
+
+  static final ValueNotifier<String?> backgroundPathNotifier =
+      ValueNotifier<String?>(null);
+
+  static String? getCachedBackgroundPath() => backgroundPathNotifier.value;
+
+  static Future<void> loadBackgroundPath() async {
+    final prefs = await SharedPreferences.getInstance();
+    backgroundPathNotifier.value = prefs.getString(_backgroundPathKey);
+  }
+
+  static Future<void> saveBackgroundPath(String? path) async {
+    backgroundPathNotifier.value = path;
+    final prefs = await SharedPreferences.getInstance();
+    if (path != null) {
+      await prefs.setString(_backgroundPathKey, path);
+    } else {
+      await prefs.remove(_backgroundPathKey);
+    }
+  }
 
   static Future<List<ForceList>> loadLists() async {
     final prefs = await SharedPreferences.getInstance();

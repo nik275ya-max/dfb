@@ -1,11 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/force_list.dart';
+import '../services/storage_service.dart';
 import '../utils/app_icons.dart';
 import '../widgets/desktop_grid.dart';
 import 'notes_screen.dart';
-import 'settings_screen.dart';
 
-class AppsNotesScreen extends StatelessWidget {
+class AppsNotesScreen extends StatefulWidget {
   final List<ForceList> lists;
   final String? activeListId;
   final Function(List<ForceList>)? onListsChanged;
@@ -20,23 +21,54 @@ class AppsNotesScreen extends StatelessWidget {
   });
 
   @override
+  State<AppsNotesScreen> createState() => _AppsNotesScreenState();
+}
+
+class _AppsNotesScreenState extends State<AppsNotesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    StorageService.backgroundPathNotifier.addListener(_onBackgroundChanged);
+  }
+
+  @override
+  void dispose() {
+    StorageService.backgroundPathNotifier.removeListener(_onBackgroundChanged);
+    super.dispose();
+  }
+
+  void _onBackgroundChanged() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF1a1a2e),
-            Color(0xFF16213e),
-            Color(0xFF0f3460),
-          ],
+    final bgPath = StorageService.getCachedBackgroundPath();
+
+    Widget background;
+    if (bgPath != null && File(bgPath).existsSync()) {
+      background = Image.file(
+        File(bgPath),
+        fit: BoxFit.cover,
+      );
+    } else {
+      background = const DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF1a1a2e), Color(0xFF16213e), Color(0xFF0f3460)],
+          ),
         ),
-      ),
-      child: SafeArea(
-        child: Stack(
-          children: [
-            Column(
+      );
+    }
+
+    return Stack(
+      children: [
+        Positioned.fill(child: background),
+        Positioned.fill(
+          child: SafeArea(
+            child: Column(
               children: [
                 const Spacer(flex: 2),
                 Expanded(
@@ -49,8 +81,11 @@ class AppsNotesScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => NotesScreen(
-                              lists: lists,
-                              activeListId: activeListId,
+                              lists: widget.lists,
+                              activeListId: widget.activeListId,
+                              onListsChanged: widget.onListsChanged,
+                              onActiveListChanged:
+                                  widget.onActiveListChanged,
                             ),
                           ),
                         );
@@ -61,42 +96,9 @@ class AppsNotesScreen extends StatelessWidget {
                 const Spacer(flex: 1),
               ],
             ),
-            Positioned(
-              top: 8,
-              right: 16,
-              child: GestureDetector(
-                onTap: () {
-                  if (onListsChanged != null && onActiveListChanged != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsScreen(
-                          lists: lists,
-                          activeListId: activeListId,
-                          onListsChanged: onListsChanged!,
-                          onActiveListChanged: onActiveListChanged!,
-                        ),
-                      ),
-                    );
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
