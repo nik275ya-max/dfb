@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/force_list.dart';
 import '../services/storage_service.dart';
 
@@ -137,6 +138,35 @@ class _NotesScreenState extends State<NotesScreen> {
             )
           else
             ..._lists.map((list) => _buildListTile(list, setSheetState)),
+          const SizedBox(height: 24),
+          const Divider(color: Colors.white12),
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () => launchUrl(Uri.parse('https://t.me/magic_tec')),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1F2937),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.favorite_border, color: Color(0xFFF97316), size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Узнать больше',
+                    style: TextStyle(
+                      color: Color(0xFFF97316),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
