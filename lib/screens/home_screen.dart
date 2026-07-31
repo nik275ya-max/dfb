@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/force_list.dart';
 import '../services/storage_service.dart';
 import '../utils/app_icons.dart';
@@ -60,6 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_tensSelected && _unitsSelected) {
       final number = _tensDigit * 10 + _unitsDigit;
       StorageService.saveLastSwipeNumber(number);
+
+      if (number > 0) {
+        HapticFeedback.vibrate();
+      }
 
       setState(() {
         _tensSelected = false;
