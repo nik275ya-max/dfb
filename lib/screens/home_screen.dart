@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:vibration/vibration.dart';
 import '../models/force_list.dart';
 import '../services/storage_service.dart';
 import '../utils/app_icons.dart';
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       StorageService.saveLastSwipeNumber(number);
 
       if (number > 0) {
-        HapticFeedback.vibrate();
+        Vibration.vibrate(duration: 100);
       }
 
       setState(() {
