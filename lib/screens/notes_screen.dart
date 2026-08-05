@@ -142,7 +142,7 @@ class _NotesScreenState extends State<NotesScreen> {
           const Divider(color: Colors.white12),
           const SizedBox(height: 12),
           GestureDetector(
-            onTap: () => launchUrl(Uri.parse('https://t.me/magic_tec')),
+            onTap: () => launchUrl(Uri.parse('https://magic-tech.ru')),
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
